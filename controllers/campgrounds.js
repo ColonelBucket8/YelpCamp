@@ -37,7 +37,6 @@ module.exports.randCampground = async (req, res) => {
             path: 'author'
         }
     }).populate('author');
-    console.log(campground);
     res.render('campgrounds/show', { campground })
 }
 
