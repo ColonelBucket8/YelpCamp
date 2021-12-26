@@ -16,7 +16,7 @@ router.route('/')
 
 router.get('/new', isLoggedIn, campgrounds.renderNewForm)
 
-// router.get('/random', campgrounds.randCampground)
+router.get('/random', catchAsync(campgrounds.randCampground))
 
 router.route('/:id')
     .get(catchAsync(campgrounds.showCampground))

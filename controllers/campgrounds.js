@@ -29,12 +29,17 @@ module.exports.createCampground = async (req, res, next) => {
     res.redirect(`/campgrounds/${campground._id}`)
 }
 
-// module.exports.randCampground = async (req, res) => {
-//     const campData = await Campground.aggregate([{ $sample: { size: 1 } }])
-//     const campground = campData[0]
-//     console.log(campground);
-//     res.render('campgrounds/show', { campground })
-// }
+module.exports.randCampground = async (req, res) => {
+    const rand = await Campground.aggregate([{ $sample: { size: 1 } }])
+    const campground = await Campground.findById(rand[0]._id).populate({
+        path: 'reviews',
+        populate: {
+            path: 'author'
+        }
+    }).populate('author');
+    console.log(campground);
+    res.render('campgrounds/show', { campground })
+}
 
 module.exports.showCampground = async (req, res) => {
     const campground = await Campground.findById(req.params.id).populate({
